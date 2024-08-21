@@ -2,3 +2,9 @@
 env/
 
 __pycache__
+
+logs
+
+build
+dist
+*.egg-info
