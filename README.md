@@ -31,7 +31,8 @@
 
 4. **Install the Package**:
     ```bash
-    python setup.py install
+    python setup.py sdist bdist_wheel
+    pip install .
     ```
 
 ## **Usage**

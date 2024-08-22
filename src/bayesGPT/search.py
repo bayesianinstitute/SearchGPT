@@ -38,7 +38,7 @@ class WebSearch:
 
         # logger.info(f"Reranked results: {rerank_response}")
         system_prompt=f"""
-            Based on this Web information: `{description}` 
+            Based on this Web information: `{text_results}` 
             and this question: `{query}`,
             respond to the user in a friendly manner.
             """

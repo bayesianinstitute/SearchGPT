@@ -1,5 +1,5 @@
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
+from models import QueryRequest
 
 from bayesGPT.search import WebSearch
 from bayesGPT.classify import QueryClassifier
@@ -10,41 +10,48 @@ logger.add("logs/file_{time}.log", rotation="12:00")
 
 app = FastAPI()
 
-# Initialize objects outside the endpoint for performance
+# Initialize Module 
 model = GeminiModel()
 searcher = WebSearch()
 classifier = QueryClassifier(model=model)
-
-class QueryRequest(BaseModel):
-    query: str
 
 @app.get("/")
 async def read_root():
     return {"message": "Welcome to the LLM with Search API!"}
 
-@app.post("/ask")
-async def ask(request: QueryRequest):
+@app.post("/ask/history")
+async def history(request: QueryRequest):
     """
     Endpoint to handle user queries.
     Expects a JSON payload with a "query" key.
     """
     try:
         query = request.query
+        history = request.history
+
+        if not history:
+            raise HTTPException(status_code=400, detail='Missing "history" parameter')
+
         if not query:
             raise HTTPException(status_code=400, detail='Missing "query" parameter')
 
         if classifier.classify(query):
-            prompt, webResult = searcher.search(query)
-            result = model.generate_text(prompt)
+            new_query = classifier.generated_web_query(query, history)
+            logger.debug(f"new_query{new_query}")
+            prompt, webResult = searcher.search(new_query)
+            result, hist = model.chatAi(prompt, history)
+
             response = {
                 "result": result,
+                "hist": hist,
                 "webResult": webResult,
             }
             logger.info(f"LLM With Search result: {result}")
         else:
-            result = model.generate_text(query)
+            result, hist = model.chatAi(query, history)
             response = {
                 "result": result,
+                "history": hist,
             }
             logger.info(f"LLM Without Search result: {result}")
 
@@ -62,17 +69,19 @@ async def web(request: QueryRequest):
     """
     try:
         query = request.query
+        history = request.history  # Added history parameter
+
         if not query:
             raise HTTPException(status_code=400, detail='Missing "query" parameter')
 
         prompt, webResult = searcher.search(query)
-        result = model.generate_text(prompt)
+        result, hist = model.chatAi(prompt, history)  # Use history here
         response = {
             "result": result,
+            "hist": hist,
             "webResult": webResult,
         }
         logger.info(f"LLM With Search result: {result}")
-
 
         return response
 
@@ -84,4 +93,3 @@ if __name__ == "__main__":
     import uvicorn
     # uvicorn.run(app, host="0.0.0.0", port=8000, log_level="info") # Production
     uvicorn.run(app, host="127.0.0.1", port=8000, log_level="info") # Development
-
