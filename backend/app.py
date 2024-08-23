@@ -39,6 +39,8 @@ async def history(request: QueryRequest):
             new_query = classifier.generated_web_query(query, history)
             logger.debug(f"new_query{new_query}")
             prompt, webResult = searcher.search(new_query)
+            logger.debug(f"Search result: {webResult}")
+
             result, hist = model.chatAi(prompt, history)
 
             response = {
@@ -91,5 +93,5 @@ async def web(request: QueryRequest):
 
 if __name__ == "__main__":
     import uvicorn
-    # uvicorn.run(app, host="0.0.0.0", port=8000, log_level="info") # Production
-    uvicorn.run(app, host="127.0.0.1", port=8000, log_level="info") # Development
+    uvicorn.run(app, host="0.0.0.0", port=8000, log_level="info") # Production
+    # uvicorn.run(app, host="127.0.0.1", port=8000, log_level="info") # Development
