@@ -36,7 +36,7 @@ async def history(request: QueryRequest):
             raise HTTPException(status_code=400, detail='Missing "query" parameter')
 
         if classifier.classify(query):
-            new_query = classifier.generated_web_query(query, history)
+            new_query = classifier.generate_web_query(query, history)
             logger.debug(f"new_query{new_query}")
             prompt, webResult = searcher.search(new_query)
             logger.debug(f"Search result: {webResult}")
