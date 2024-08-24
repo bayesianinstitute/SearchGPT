@@ -8,10 +8,24 @@
 ## **Features**
 
 - **Web Search Integration**: Fetches real-time information from the web using DuckDuckGo.
-- **LLM-Based Text Generation**: Generates text responses based on user queries with advanced language models.
+  
+  ![DuckDuckGo Logo](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_mrcJAMUsV6n0u7UXGQyvDVfw0xqjWedtzg&s)
+
+- **LLM-Based Text Generation**: Generates text responses based on user queries with advanced language models using Gemini (Google Generative AI).
+  
+  ![Google Generative AI Logo](https://htxt.co.za/wp-content/uploads/2024/05/google-gemini-1-5-flash-header.jpg)
+
 - **Asynchronous API**: Handles requests efficiently with a FastAPI-based backend.
+  
+  ![FastAPI Logo](https://fastapi.tiangolo.com/img/logo-margin/logo-teal.png)
+
 - **Comprehensive Logging**: Monitors and debugs using Loguru for detailed logging.
+  
+  ![Loguru Logo](https://raw.githubusercontent.com/Delgan/loguru/master/docs/_static/img/logo.png)
+
 - **User-Friendly Frontend**: Interact with the system via an intuitive Streamlit web interface.
+  ![Streamlit Logo](https://eu-images.contentstack.com/v3/assets/blt6b0f74e5591baa03/blt7c0bf7e21d4410b4/6319700b8cc2fa14e223aa27/8895.png)
+
 
 ## **Installation**
 
@@ -50,7 +64,7 @@
     Open your browser and navigate to `http://127.0.0.1:8000` to interact with the API.
 
 3. **Example Request**:
-    - **POST /ask**: Submit a query to the LLM with optional web search integration.
+    - **POST /ask/search**: Submit a query to the LLM with optional web search integration.
     
     ```bash
     curl -X POST "http://127.0.0.1:8000/ask/search" -H "Content-Type: application/json" -d '{"query":"Who won Euro 2024 ?"}'
