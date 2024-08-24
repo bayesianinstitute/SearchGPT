@@ -2,6 +2,9 @@
 
 **Search LLM** is a Python-based project designed to enhance the accuracy and relevance of responses by integrating Large Language Models (LLMs) with real-time web search. This project uses various tools and frameworks, including DuckDuckGo for web search, Google Generative AI for text generation, and FastAPI for efficient API handling.
 
+![High-Level Design](doc/hldDesign.png)
+
+
 ## **Features**
 
 - **Web Search Integration**: Fetches real-time information from the web using DuckDuckGo.
@@ -50,7 +53,7 @@
     - **POST /ask**: Submit a query to the LLM with optional web search integration.
     
     ```bash
-    curl -X POST "http://127.0.0.1:8000/ask" -H "Content-Type: application/json" -d '{"query":"What is the capital of France?"}'
+    curl -X POST "http://127.0.0.1:8000/ask/search" -H "Content-Type: application/json" -d '{"query":"Who won Euro 2024 ?"}'
     ```
 
 4. **Run the Application (Optional)**:
