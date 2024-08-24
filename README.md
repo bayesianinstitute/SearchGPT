@@ -56,8 +56,7 @@
 
 1. **Run the FastAPI Server**:
     ```bash
-    cd backend
-    uvicorn app:app --reload
+    uvicorn backend.app:app --reload
     ```
 
 2. **Access the API**:

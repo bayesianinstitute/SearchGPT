@@ -1,0 +1,17 @@
+# Ignore the virtual environment directory
+env/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.env
+.env
+
+
+
+logs
+
+build
+dist
+*.egg-info

@@ -1,6 +1,5 @@
 from fastapi import FastAPI, HTTPException
-from models import QueryRequest
-
+from backend.models import QueryRequest
 from bayesGPT.search import WebSearch
 from bayesGPT.classify import QueryClassifier
 from bayesGPT.model import GeminiModel
